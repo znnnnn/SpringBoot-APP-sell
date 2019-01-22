@@ -31,7 +31,7 @@ public class ProductServiceImplTest {
 
     @Test
     public void findOne() throws Exception {
-        ProductInfo productInfo = productService.findOne("123456");
+         ProductInfo productInfo = productService.findOne("123456");
         Assert.assertEquals("123456", productInfo.getProductId());
     }
 

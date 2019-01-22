@@ -70,7 +70,9 @@ public class BuyerProductController {
                     productInfoVoList.add(productInfoVo);
                 }
             }
+            //遍历单个商品数据
             productVO.setProductInfoVoList(productInfoVoList);
+            //商品视图数据
             productVOList.add(productVO);
         }
 
