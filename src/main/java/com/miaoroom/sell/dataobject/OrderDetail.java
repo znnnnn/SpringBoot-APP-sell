@@ -1,5 +1,7 @@
 package com.miaoroom.sell.dataobject;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
@@ -10,6 +12,7 @@ import java.math.BigDecimal;
  * @author: znnnnn
  */
 @Entity
+@Data
 public class OrderDetail {
 
     @Id

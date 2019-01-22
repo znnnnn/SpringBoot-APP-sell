@@ -27,7 +27,7 @@ public class OrderMaster {
     private String orderId;
 
     /**买家名字*/
-    private String buyerNmae;
+    private String buyerName;
 
     /**买家手机号*/
     private String buyerPhone;
