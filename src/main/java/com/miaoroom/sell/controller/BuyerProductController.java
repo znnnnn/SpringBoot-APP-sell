@@ -7,6 +7,7 @@ import com.miaoroom.sell.dataobject.ProductCategory;
 import com.miaoroom.sell.dataobject.ProductInfo;
 import com.miaoroom.sell.service.CategoryService;
 import com.miaoroom.sell.service.ProductService;
+import com.miaoroom.sell.utils.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,11 +77,6 @@ public class BuyerProductController {
             productVOList.add(productVO);
         }
 
-        ResultVO resultVO = new ResultVO();
-        resultVO.setData(productVOList);
-        resultVO.setCode(0);
-        resultVO.setMsg("成功");
-
-        return resultVO;
+        return ResultVOUtil.success(productVOList);
     }
 }

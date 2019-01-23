@@ -1,13 +1,17 @@
 package com.miaoroom.sell.service.impl;
 
 import com.miaoroom.sell.dataobject.ProductInfo;
+import com.miaoroom.sell.dto.CartDTO;
 import com.miaoroom.sell.enums.ProductStatusEnum;
+import com.miaoroom.sell.enums.ResultEnum;
+import com.miaoroom.sell.exception.SellException;
 import com.miaoroom.sell.repository.ProductInfoRepository;
 import com.miaoroom.sell.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,5 +44,28 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
+    }
+
+    @Override
+    public void increaseStock(List<CartDTO> cartDTOList) {
+
+    }
+
+    @Override
+    @Transactional
+    public void decreaseStock(List<CartDTO> cartDTOList) {
+        for (CartDTO carDTO : cartDTOList) {
+            ProductInfo productInfo = repository.findById(carDTO.getProductId()).get();
+            if (productInfo == null) {
+                throw new SellException((ResultEnum.PRODECU_NOT_EXIST));
+            }
+            Integer result = productInfo.getProductStock() - carDTO.getProductQuantity();
+            if (result < 0) {
+                throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
+            }
+
+            productInfo.setProductStock(result);
+            repository.save(productInfo);
+        }
     }
 }
