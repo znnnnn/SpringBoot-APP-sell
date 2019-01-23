@@ -5,6 +5,8 @@ import com.miaoroom.sell.dataobject.OrderMaster;
 import com.miaoroom.sell.dataobject.ProductInfo;
 import com.miaoroom.sell.dto.CartDTO;
 import com.miaoroom.sell.dto.OrderDTO;
+import com.miaoroom.sell.enums.OrderStatusEnum;
+import com.miaoroom.sell.enums.PayStatusEnum;
 import com.miaoroom.sell.enums.ResultEnum;
 import com.miaoroom.sell.exception.SellException;
 import com.miaoroom.sell.repository.OrderDetailRepository;
@@ -59,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
                 throw new SellException((ResultEnum.PRODECU_NOT_EXIST));
             }
             //2. 计算订单总价
-            orderAmount = orderDetail.getProductPrice()
+            orderAmount = productInfo.getProductPrice()
                     .multiply(new BigDecimal(orderDetail.getProductQuantity()))
                     .add(orderAmount);
             orderDetail.setDetailId(KeyUtil.genUniqueKey());
@@ -70,10 +72,12 @@ public class OrderServiceImpl implements OrderService {
         }
         //3. 写入订单数据库（orderMaster和orderDetail）
         OrderMaster orderMaster = new OrderMaster();
-        orderMaster.setOrderId(orderId);
-        orderMaster.setOrderAmount(orderAmount);
         //Spring拷贝 属性
         BeanUtils.copyProperties(orderDTO, orderMaster);
+        orderMaster.setOrderId(orderId);
+        orderMaster.setOrderAmount(orderAmount);
+        orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
+        orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
         orderMasterRepository.save(orderMaster);
         //4. 扣库存
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->

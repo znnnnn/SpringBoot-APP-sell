@@ -45,7 +45,7 @@ public class OrderDetailRepositoryTest {
 
     @Test
     public void findByOrderId() throws Exception {
-        List<OrderDetail> orderDetailList = repository.findByOrderId();
+        List<OrderDetail> orderDetailList = repository.findByOrderId("123456");
         Assert.assertNotEquals(0, orderDetailList.size());
     }
 }
