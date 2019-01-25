@@ -2,6 +2,7 @@ package com.miaoroom.sell.service.impl;
 
 import com.miaoroom.sell.dataobject.OrderDetail;
 import com.miaoroom.sell.dto.OrderDTO;
+import com.miaoroom.sell.enums.OrderStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -81,11 +82,14 @@ public class OrderServiceImplTest {
 
     @Test
     public void cancel() {
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.cancel(orderDTO);
+        Assert.assertEquals(OrderStatusEnum.CANCEL.getCode(), result.getOrderStatus());
     }
 
     @Test
     public void finish() {
-    }
+        }
 
     @Test
     public void paid() {
