@@ -76,7 +76,7 @@ public class OrderServiceImplTest {
     @Test
     public void findList() {
         // 列表查询测试
-        PageRequest request = new PageRequest(0, 2);
+        PageRequest request = PageRequest.of(0, 2);
         Page<OrderDTO> orderDTOPage = orderService.findList(BUYER_OPENID, request);
         Assert.assertNotEquals(0, orderDTOPage.getTotalElements());
     }
