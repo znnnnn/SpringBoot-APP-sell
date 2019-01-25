@@ -21,7 +21,7 @@ public interface OrderService {
     /**
      * 查询单个订单
      */
-    OrderDTO findOnes(String orderId);
+    OrderDTO findOne(String orderId);
 
     /**
      * 查询订单列表
