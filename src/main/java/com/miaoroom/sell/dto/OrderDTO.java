@@ -1,8 +1,11 @@
 package com.miaoroom.sell.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.miaoroom.sell.dataobject.OrderDetail;
 import com.miaoroom.sell.enums.OrderStatusEnum;
 import com.miaoroom.sell.enums.PayStatusEnum;
+import com.miaoroom.sell.utils.serializer.Date2LongSerializer;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -16,6 +19,7 @@ import java.util.List;
  * @author: znnnnn
  */
 @Data
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
 
     /**
@@ -58,14 +62,16 @@ public class OrderDTO {
      */
     private Integer payStatus;
 
+
     /**
      * 创建时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
-
     /**
      * 更新时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
 
     List<OrderDetail> orderDetailList;

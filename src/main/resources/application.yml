@@ -5,19 +5,23 @@ spring:
     password: 123456
     url: jdbc:mysql://111.231.116.130/sell?characterEncoding=utf-8&useSSL=false
     #以下为连接池的相关参数配置
-#    secondary:
-#      max-idle: 10
-#      max-wait: 10000
-#      min-idle: 5
-#      initial-size: 5
-#      validation-query: SELECT 1
-#      test-on-borrow: false
-#      test-while-idle: true
-#      time-between-eviction-runs-millis: 18800
+    secondary:
+      max-idle: 10
+      max-wait: 10000
+      min-idle: 5
+      initial-size: 5
+      validation-query: SELECT 1
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 18800
 
 
   jpa:
     show-sql: true
+  # 返回的对象不包括空值
+
+  jackson:
+    default-property-inclusion: non_null
 server:
   servlet:
     context-path: /sell

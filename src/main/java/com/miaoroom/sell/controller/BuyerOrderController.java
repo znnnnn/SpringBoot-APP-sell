@@ -6,9 +6,11 @@ import com.miaoroom.sell.dto.OrderDTO;
 import com.miaoroom.sell.enums.ResultEnum;
 import com.miaoroom.sell.exception.SellException;
 import com.miaoroom.sell.form.OrderForm;
+import com.miaoroom.sell.service.BuyerService;
 import com.miaoroom.sell.service.OrderService;
 import com.miaoroom.sell.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +33,9 @@ import java.util.Map;
 @RequestMapping("/buyer/order")
 @Slf4j
 public class BuyerOrderController {
+
+    @Autowired
+    private BuyerService buyerService;
 
     @Autowired
     private OrderService orderService;
@@ -70,13 +75,25 @@ public class BuyerOrderController {
         Page<OrderDTO> orderDTOPage = orderService.findList(openid, request);
 
 
-
         return ResultVOUtil.success(orderDTOPage.getContent());
 
 
     }
 
     // 订单详情
+    @GetMapping("/detail")
+    public ResultVO<OrderDTO> detail(@RequestParam("openId") String openId,
+                                     @RequestParam("orderId") String orderId) {
+        OrderDTO orderDTO = buyerService.findOrderOne(openId, orderId);
+        return ResultVOUtil.success(orderDTO);
+    }
 
     // 取消订单
+    @PostMapping("/cancel")
+    public ResultVO cancel(@RequestParam("openId") String openId,
+                           @RequestParam("orderId") String orderId) {
+        //TODO 越权访问待改进
+        buyerService.cancelOrder(openId, orderId);
+        return ResultVOUtil.success();
+    }
 }
