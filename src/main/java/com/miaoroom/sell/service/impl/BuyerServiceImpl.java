@@ -7,6 +7,7 @@ import com.miaoroom.sell.service.BuyerService;
 import com.miaoroom.sell.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @Description: TODO
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author: znnnnn
  */
 @Slf4j
+@Service
 public class BuyerServiceImpl implements BuyerService {
 
     @Autowired
